@@ -8,9 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.thiagofurlan.springmongodb.entities.Category;
 import com.thiagofurlan.springmongodb.entities.Order;
 import com.thiagofurlan.springmongodb.entities.User;
 import com.thiagofurlan.springmongodb.entities.enums.OrderStatus;
+import com.thiagofurlan.springmongodb.repositories.CategoryRepository;
 import com.thiagofurlan.springmongodb.repositories.OrderRepository;
 import com.thiagofurlan.springmongodb.repositories.UserRepository;
 
@@ -21,10 +23,17 @@ public class TestConfig implements CommandLineRunner {
 	private UserRepository userRepository;
 	@Autowired
 	private OrderRepository orderRepository;
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
 		userRepository.deleteAll();
+		categoryRepository.deleteAll();
+		
+		Category cat1 = new Category(null, "Electronics");
+		Category cat2 = new Category(null, "Books");
+		Category cat3 = new Category(null, "Computers");
 		
 		User user1 = new User(null, "Rei", "rei@rei", "9999", "1234");
 		User user2 = new User(null, "Cannón", "cannon@cannon", "9999", "1234");
@@ -35,6 +44,7 @@ public class TestConfig implements CommandLineRunner {
 		
 		userRepository.saveAll(Arrays.asList(user1, user2));
 		orderRepository.saveAll(Arrays.asList(order1, order2, order3));
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 	}
 	
 	
