@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.thiagofurlan.springmongodb.entities.Category;
 import com.thiagofurlan.springmongodb.entities.Order;
 import com.thiagofurlan.springmongodb.entities.OrderItem;
+import com.thiagofurlan.springmongodb.entities.Payment;
 import com.thiagofurlan.springmongodb.entities.Product;
 import com.thiagofurlan.springmongodb.entities.User;
 import com.thiagofurlan.springmongodb.entities.enums.OrderStatus;
@@ -79,5 +80,10 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem orderItem4 = new OrderItem(order3, p5, 2, p5.getPrice());
 		
 		orderItemRepository.saveAll(Arrays.asList(orderItem1, orderItem2, orderItem3, orderItem4));
+	
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), order1);
+		order1.setPayment(pay1);
+		orderRepository.save(order1);
+	
 	}
 }
