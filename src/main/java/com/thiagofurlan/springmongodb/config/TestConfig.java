@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.thiagofurlan.springmongodb.entities.Category;
 import com.thiagofurlan.springmongodb.entities.Order;
+import com.thiagofurlan.springmongodb.entities.Product;
 import com.thiagofurlan.springmongodb.entities.User;
 import com.thiagofurlan.springmongodb.entities.enums.OrderStatus;
 import com.thiagofurlan.springmongodb.repositories.CategoryRepository;
 import com.thiagofurlan.springmongodb.repositories.OrderRepository;
+import com.thiagofurlan.springmongodb.repositories.ProductRepository;
 import com.thiagofurlan.springmongodb.repositories.UserRepository;
 
 @Configuration
@@ -25,15 +27,25 @@ public class TestConfig implements CommandLineRunner {
 	private OrderRepository orderRepository;
 	@Autowired
 	private CategoryRepository categoryRepository;
+	@Autowired
+	private ProductRepository productRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
 		userRepository.deleteAll();
+		orderRepository.deleteAll();
 		categoryRepository.deleteAll();
+		productRepository.deleteAll();
 		
 		Category cat1 = new Category(null, "Electronics");
 		Category cat2 = new Category(null, "Books");
 		Category cat3 = new Category(null, "Computers");
+		
+		Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "");
+		Product p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
+		Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
+		Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
+		Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 		
 		User user1 = new User(null, "Rei", "rei@rei", "9999", "1234");
 		User user2 = new User(null, "Cannón", "cannon@cannon", "9999", "1234");
@@ -45,6 +57,7 @@ public class TestConfig implements CommandLineRunner {
 		userRepository.saveAll(Arrays.asList(user1, user2));
 		orderRepository.saveAll(Arrays.asList(order1, order2, order3));
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 	}
 	
 	
