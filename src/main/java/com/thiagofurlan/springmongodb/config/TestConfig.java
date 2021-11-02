@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.thiagofurlan.springmongodb.entities.Category;
 import com.thiagofurlan.springmongodb.entities.Order;
+import com.thiagofurlan.springmongodb.entities.OrderItem;
 import com.thiagofurlan.springmongodb.entities.Product;
 import com.thiagofurlan.springmongodb.entities.User;
 import com.thiagofurlan.springmongodb.entities.enums.OrderStatus;
 import com.thiagofurlan.springmongodb.repositories.CategoryRepository;
+import com.thiagofurlan.springmongodb.repositories.OrderItemRepository;
 import com.thiagofurlan.springmongodb.repositories.OrderRepository;
 import com.thiagofurlan.springmongodb.repositories.ProductRepository;
 import com.thiagofurlan.springmongodb.repositories.UserRepository;
@@ -29,6 +31,8 @@ public class TestConfig implements CommandLineRunner {
 	private CategoryRepository categoryRepository;
 	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -68,5 +72,12 @@ public class TestConfig implements CommandLineRunner {
 		
 		userRepository.saveAll(Arrays.asList(user1, user2));
 		orderRepository.saveAll(Arrays.asList(order1, order2, order3));
+	
+		OrderItem orderItem1 = new OrderItem(order1, p1, 2, p1.getPrice());
+		OrderItem orderItem2 = new OrderItem(order1, p3, 1, p3.getPrice());
+		OrderItem orderItem3 = new OrderItem(order2, p3, 2, p3.getPrice());
+		OrderItem orderItem4 = new OrderItem(order3, p5, 2, p5.getPrice());
+	
+		orderItemRepository.saveAll(Arrays.asList(orderItem1, orderItem2, orderItem3, orderItem4));
 	}
 }
