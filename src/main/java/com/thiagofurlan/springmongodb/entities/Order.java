@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -40,6 +41,8 @@ public class Order implements Serializable{
 	
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
 	private Payment payment;
+	
+	private double totalPrice;
 	
 	public Order() {}
 
@@ -95,6 +98,15 @@ public class Order implements Serializable{
 
 	public void setPayment(Payment payment) {
 		this.payment = payment;
+	}
+	
+	public Double getTotal() {
+		Consumer<OrderItem> getTotalPrice = (orderItem) -> {
+			totalPrice += orderItem.getSubTotal();
+		};
+		
+		items.forEach(getTotalPrice);
+		return totalPrice;
 	}
 
 	@Override
